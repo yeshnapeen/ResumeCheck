@@ -5,14 +5,21 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
+
+uploads_folder_name = "uploads"
+
+
+
 # Using environment variable if set or defaulting to localhost
 front_end_url = os.environ.get('FrontEndUrl') or 'http://localhost:5173'
 cors = CORS(app, origins=[ front_end_url ])
 
-
 # Set the path where uploaded files will be saved
 uploads = os.path.abspath('uploads')
 app.config['uploads'] = uploads 
+
+if not os.path.exists(uploads):
+    os.makedirs(uploads)
 
 # Define the allowed file extensions for uploads
 ALLOWED_EXTENSIONS = {'pdf'}
@@ -47,6 +54,11 @@ def calculate_similarity(job_requirements, candidate_qualifications):
         similarity = len(common_tokens) / len(job_requirements)
 
         return similarity
+
+
+@app.route('/')
+def hello_world():
+    return f'Weclome our front end is here {front_end_url}'
 
 @app.route('/JobRequirements', methods=['POST'])
 def get_best_candidate():
