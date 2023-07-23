@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-import { TextField, Button } from '@material-ui/core';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 import { toast } from 'react-toastify';
 
 // Hack way of doing environment variables, normally you'd want to inject the config into a ci artifact post deployment
